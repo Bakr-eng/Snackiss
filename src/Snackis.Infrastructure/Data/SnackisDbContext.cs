@@ -29,5 +29,9 @@ namespace Snackis.Infrastructure.Data
 
 
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Coment> Coments { get; set; }
+
+        public DbSet<Report> Reports { get; set; }
     }
 }
