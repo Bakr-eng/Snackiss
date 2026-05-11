@@ -33,5 +33,7 @@ namespace Snackis.Infrastructure.Data
         public DbSet<Coment> Coments { get; set; }
 
         public DbSet<Report> Reports { get; set; }
+
+        public DbSet<PrivateMessage> PrivateMessages { get; set; }
     }
 }

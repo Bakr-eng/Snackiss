@@ -12,7 +12,6 @@ namespace Snackis.Domain.Entities
         public int PostId { get; set; }
         public Post Post { get; set; }
         public string ReporterId { get; set; }
-        public string ReporterName { get; set; }
         public string Reason { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsHandled { get; set; }
