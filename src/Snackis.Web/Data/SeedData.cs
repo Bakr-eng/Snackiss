@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Snackis.Domain.Entities;
 
 namespace Snackis.Web.Data
 {
@@ -9,12 +10,16 @@ namespace Snackis.Web.Data
             var roleManager = serviceProvider
                 .GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider
-                .GetRequiredService<UserManager<IdentityUser>>();
+                .GetRequiredService<UserManager<AppUser>>();
 
-            // Skapa Admin-rollen om den inte finns
+            // Skapa Admin ohc user-rollen 
             if (!await roleManager.RoleExistsAsync("Admin"))
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            if (!await roleManager.RoleExistsAsync("User"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("User"));
             }
 
             // Skapa en admin-användare
@@ -24,11 +29,12 @@ namespace Snackis.Web.Data
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
-                adminUser = new IdentityUser
+                adminUser = new AppUser
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    EmailConfirmed = true  // viktigt eftersom RequireConfirmedAccount = true
+                    EmailConfirmed = true,
+                    Name = "Admin"
                 };
                 await userManager.CreateAsync(adminUser, adminPassword);
                 await userManager.AddToRoleAsync(adminUser, "Admin");

@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Snackis.Infrastructure.Data;
 using Snackis.Web.Data;
+using Snackis.Domain.Entities;
 
 namespace Snackis.Web
 {
@@ -26,11 +27,11 @@ namespace Snackis.Web
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
-
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<AppUser>(options =>
                options.SignIn.RequireConfirmedAccount = true)
-               .AddRoles<IdentityRole>()
+               .AddRoles<IdentityRole>() 
                .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 
             builder.Services.AddAuthorization(options =>
