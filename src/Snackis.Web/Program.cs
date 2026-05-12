@@ -28,7 +28,7 @@ namespace Snackis.Web
 
 
             builder.Services.AddDefaultIdentity<AppUser>(options =>
-               options.SignIn.RequireConfirmedAccount = true)
+               options.SignIn.RequireConfirmedAccount = false) // false för att logga in direkt utan bekräfta
                .AddRoles<IdentityRole>() 
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
