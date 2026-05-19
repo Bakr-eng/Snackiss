@@ -1,8 +1,10 @@
+using Snackis.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Snackis.Application.Service;
+using Snackis.Domain.Entities;
 using Snackis.Infrastructure.Data;
 using Snackis.Web.Data;
-using Snackis.Domain.Entities;
 
 namespace Snackis.Web
 {
@@ -25,6 +27,8 @@ namespace Snackis.Web
 
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
             builder.Services.AddDefaultIdentity<AppUser>(options =>

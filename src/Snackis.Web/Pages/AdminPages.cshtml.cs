@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Snackis.Web.Pages
 {
-    [Authorize(Policy = "ShouldBeAdmin")]
-    public class AdminPageModel : PageModel
+    [Authorize(policy: "ShouldBeAdmin")]
+    public class AdminPagesModel : PageModel
     {
         public void OnGet()
         {

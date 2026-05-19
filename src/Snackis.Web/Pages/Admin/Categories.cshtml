@@ -1,0 +1,59 @@
+﻿@page
+@model Snackis.Web.Pages.Admin.CategoriesModel
+@{
+    ViewData["Title"] = "Kategorier";
+}
+
+<h2>Hantera Kategorier</h2>
+
+<!-- CREATE -->
+<form method="post" asp-page-handler="Create" class="mb-4">
+    <div class="input-group" style="max-width: 500px;">
+        <input asp-for="NewCategoryName" class="form-control" placeholder="Nytt kategorinamn" required />
+        <select asp-for="NewParentCategoryId" class="form-select">
+            <option value="">-- Ingen förälder (toppkategori) --</option>
+            @foreach (var cat in Model.Categories)
+            {
+                <option value="@cat.Id">@cat.Name</option>
+            }
+        </select>
+        <button class="btn btn-success">+ Lägg till</button>
+    </div>
+</form>
+
+<!-- READ + UPDATE + DELETE -->
+<table class="table table-bordered" style="max-width: 700px;">
+    <thead class="table-dark">
+        <tr>
+            <th>Namn</th>
+            <th>Underkategorier</th>
+            <th>Åtgärder</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cat in Model.Categories)
+        {
+            <tr>
+                <td>
+                    <form method="post" asp-page-handler="Edit" class="d-flex gap-1">
+                        <input type="hidden" asp-for="EditId" value="@cat.Id" />
+                        <input asp-for="EditName" value="@cat.Name" class="form-control form-control-sm" />
+                        <button class="btn btn-sm btn-primary">Spara</button>
+                    </form>
+                </td>
+                <td>
+                    @string.Join(", ", cat.SubCategories.Select(s => s.Name))
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="Delete">
+                        <input type="hidden" name="id" value="@cat.Id" />
+                        <button class="btn btn-sm btn-danger"
+                                onclick="return confirm('Radera @cat.Name?')">
+                            Radera
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
