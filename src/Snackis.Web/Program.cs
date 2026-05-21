@@ -31,6 +31,7 @@ namespace Snackis.Web
 
             // Tabeller
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IPostService, PostService>();
 
 
             builder.Services.AddDefaultIdentity<AppUser>(options =>

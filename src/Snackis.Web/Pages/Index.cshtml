@@ -1,11 +1,75 @@
 ﻿@page
 @model Snackis.Web.Pages.IndexModel
 @{
+    ViewData["Title"] = "Snackis";
 }
 
+<h1 class="mb-4">Snackis</h1>
 
-
-<div class="d-flex">
-<h1> Snackis</h1>
-
+<!-- PARENT KATEGORIER -->
+<div class="mb-4">
+    <h5 class="text-muted mb-3">Välj kategori</h5>
+    <div class="d-flex flex-wrap gap-2">
+        @foreach (var cat in Model.ParentCategories)
+        {
+            var isActive = Model.SelectedParent?.Id == cat.Id;
+            <a href="?parentId=@cat.Id"
+               class="btn @(isActive ? "btn-success" : "btn-outline-primary")">
+                @cat.Name
+                @if (cat.SubCategories.Any())
+                {
+                    <span class="badge bg-secondary ms-1">@cat.SubCategories.Count</span>
+                }
+            </a>
+        }
+    </div>
 </div>
+
+<!-- UNDERKATEGORIER (visas när parent är vald) -->
+@if (Model.SelectedParent != null)
+{
+    <div class="mb-4">
+        <h6 class="text-muted mb-2"> Underkategorier i "@Model.SelectedParent.Name"</h6>
+        <div class="d-flex flex-wrap gap-2">
+            @foreach (var sub in Model.SelectedParent.SubCategories)
+            {
+                var isActive = Model.SelectedSub?.Id == sub.Id;
+                <a href="?parentId=@Model.SelectedParent.Id&subId=@sub.Id"
+                   class="btn btn-sm @(isActive ? "btn-success" : "btn-outline-success")">
+                    @sub.Name
+                </a>
+            }
+            @if (!Model.SelectedParent.SubCategories.Any())
+            {
+                <span class="text-muted fst-italic">Inga underkategorier</span>
+            }
+        </div>
+    </div>
+}
+
+<!-- INLÄGG (visas när subkategori är vald) -->
+@if (Model.SelectedSub != null)
+{
+    <div>
+        <h5 class="mb-3">Inlägg i "@Model.SelectedSub.Name"</h5>
+        @if (Model.Posts.Any())
+        {
+            <div class="list-group" style="max-width: 700px;">
+                @foreach (var post in Model.Posts)
+                {
+                    <div class="list-group-item list-group-item-action">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h6 class="mb-1">@post.Title</h6>
+                            <small class="text-muted">@post.CreatedAt.ToString("yyyy-MM-dd HH:mm")</small>
+                        </div>
+                        <p class="mb-0 text-muted small">@post.Content</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="text-muted fst-italic">Inga inlägg i denna kategori ännu.</p>
+        }
+    </div>
+}
