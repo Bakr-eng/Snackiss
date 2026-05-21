@@ -44,7 +44,11 @@ namespace Snackis.Web
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("ShouldBeAdmin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("ShouldBeUser", policy => policy.RequireRole("User"));
             });
+
+
+
 
             
 
