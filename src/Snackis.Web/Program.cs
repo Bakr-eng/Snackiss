@@ -28,6 +28,8 @@ namespace Snackis.Web
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
+            // Tabeller
             builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
