@@ -30,7 +30,7 @@ namespace Snackis.Web.Pages
         {
             var allCategories = await _categoryService.GetAllAsync();
             var parent = allCategories.FirstOrDefault(c => c.Id == parentId);
-            SubCategory = parent?.SubCategories.FirstOrDefault(s => s.Id == CategoryId);
+            SubCategory = parent?.SubCategories.FirstOrDefault(s => s.Id == categoryId);
 
             if (SubCategory == null)
             {

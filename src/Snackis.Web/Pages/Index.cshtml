@@ -29,7 +29,7 @@
 @if (Model.SelectedParent != null)
 {
     <div class="mb-4">
-        <h6 class="text-muted mb-2">↳ Underkategorier i "@Model.SelectedParent.Name"</h6>
+        <h6 class="text-muted mb-2"> Underkategorier i "@Model.SelectedParent.Name"</h6>
         <div class="d-flex flex-wrap gap-2">
             @foreach (var sub in Model.SelectedParent.SubCategories)
             {
@@ -52,6 +52,15 @@
 {
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Inlägg i "@Model.SelectedSub.Name"</h5>
+
+        @if (User.Identity?.IsAuthenticated != true)
+        {
+            <p class="text-danger mt-2">
+                Du behöver <a href="/Identity/Account/Login">logga in</a> eller
+                <a href="/Identity/Account/Register">registrera dig</a> för att kunna skapa inlägg.
+            </p>
+        }
+
         @if (User.Identity?.IsAuthenticated == true && User.IsInRole("User"))
         {
             <a href="/CreatePost?categoryId=@Model.SelectedSub.Id&parentId=@Model.SelectedParent!.Id"
