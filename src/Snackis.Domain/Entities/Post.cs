@@ -17,5 +17,7 @@ namespace Snackis.Domain.Entities
         public Category Category { get; set; }
 
         public string UserId { get; set; }
+
+      //  public string? ImageUrl { get; set; }
     }
 }

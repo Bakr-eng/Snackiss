@@ -53,8 +53,8 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Inlägg i "@Model.SelectedSub.Name"</h5>
 
-        @if (User.Identity?.IsAuthenticated != true)
-        {
+        @if (User.Identity?.IsAuthenticated != true)  @* != true betyder att  IsAuthenticated är false eller null *@
+    {
             <p class="text-danger mt-2">
                 Du behöver <a href="/Identity/Account/Login">logga in</a> eller
                 <a href="/Identity/Account/Register">registrera dig</a> för att kunna skapa inlägg.

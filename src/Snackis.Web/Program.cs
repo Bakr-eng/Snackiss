@@ -49,7 +49,6 @@ namespace Snackis.Web
 
 
 
-
             
 
             builder.Services.AddRazorPages();

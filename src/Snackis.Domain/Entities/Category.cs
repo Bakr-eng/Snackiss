@@ -13,5 +13,6 @@ namespace Snackis.Domain.Entities
         public int? ParentCategoryId { get; set; }
         public Category? ParentCategory { get; set; }
         public ICollection<Category> SubCategories { get; set; } = new List<Category>();
+
     }
 }
