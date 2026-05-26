@@ -1,0 +1,32 @@
+﻿@page
+@model Snackis.Web.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Min profil";
+}
+
+<h2 class="mb-4">Min profil</h2>
+
+@if (Model.CurrentUser != null)
+{
+    <div class="card" style="max-width: 500px;">
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfilePictureUrl))
+            {
+                <img src="@Model.CurrentUser.ProfilePictureUrl"
+                     class="rounded-circle mb-3"
+                     style="width:100px; height:100px; object-fit:cover;" />
+            }
+            else
+            {
+                <div class="rounded-circle bg-secondary mb-3 d-flex align-items-center justify-content-center"
+                     style="width:100px; height:100px;">
+                    <span class="text-white fs-2">@(Model.CurrentUser.Name?.FirstOrDefault() ?? '?')</span>
+                </div>
+            }
+
+            <p><strong>Namn:</strong> @Model.CurrentUser.Name</p>
+            <p><strong>E-post:</strong> @Model.CurrentUser.Email</p>
+            <p><strong>Användarnamn:</strong> @Model.CurrentUser.UserName</p>
+        </div>
+    </div>
+}

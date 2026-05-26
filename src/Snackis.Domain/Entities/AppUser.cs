@@ -11,6 +11,6 @@ namespace Snackis.Domain.Entities
     {
         public string? Name { get; set; }
 
-       // public string? ProfilePictureUrl { get; set; }
+        public string? ProfilePictureUrl { get; set; }
     }
 }
