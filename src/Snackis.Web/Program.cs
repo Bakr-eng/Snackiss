@@ -1,9 +1,10 @@
-using Snackis.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Snackis.Application.Service;
+using Snackis.Application.Services;
 using Snackis.Domain.Entities;
+using Snackis.Domain.Interface;
 using Snackis.Infrastructure.Data;
+using Snackis.Infrastructure.Repositories;
 using Snackis.Web.Data;
 
 namespace Snackis.Web
@@ -25,31 +26,26 @@ namespace Snackis.Web
             builder.Services.AddDbContext<SnackisDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+            // Repositories
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
 
-            // Tabeller
+            // Services
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IPostService, PostService>();
-
 
             builder.Services.AddDefaultIdentity<AppUser>(options =>
                options.SignIn.RequireConfirmedAccount = false) // false för att logga in direkt utan bekräfta
                .AddRoles<IdentityRole>() 
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
-
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("ShouldBeAdmin", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("ShouldBeUser", policy => policy.RequireRole("User"));
             });
-
-
-
-            
 
             builder.Services.AddRazorPages();
 

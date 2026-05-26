@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snackis.Application.Service
+namespace Snackis.Application.Services
 {
     public interface ICategoryService
     {

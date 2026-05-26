@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Snackis.Application;
-using Snackis.Application.Service;
+using Snackis.Application.Services;
 using Snackis.Domain.Entities;
 
 namespace Snackis.Web.Pages.Admin

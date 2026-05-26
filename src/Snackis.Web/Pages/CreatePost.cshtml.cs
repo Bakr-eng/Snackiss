@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Snackis.Application.Service;
+using Snackis.Application.Services;
 using Snackis.Domain.Entities;
 using System.Security.Claims;
 
@@ -40,9 +40,7 @@ namespace Snackis.Web.Pages
             CategoryId = categoryId;
             ParentId = parentId;
             return Page();
-
         }
-
 
         public async Task<IActionResult> OnPostAsync()
         {

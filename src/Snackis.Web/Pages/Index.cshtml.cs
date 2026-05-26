@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Snackis.Application.Service;
+using Snackis.Application.Services;
 using Snackis.Domain.Entities;
-using Snackis.Web.Pages.Admin;
 
 namespace Snackis.Web.Pages
 {
@@ -18,14 +17,15 @@ namespace Snackis.Web.Pages
         }
 
         public List<Category> ParentCategories { get; set; } = new();
-        public Category? SelectedParent {  get; set; }
+        public Category? SelectedParent { get; set; }
         public Category? SelectedSub { get; set; }
         public List<Post> Posts { get; set; } = new();
+
         public async Task OnGetAsync(int? parentId, int? subId)
         {
             ParentCategories = await _categoryService.GetAllAsync();
 
-            if(parentId.HasValue)
+            if (parentId.HasValue)
             {
                 SelectedParent = ParentCategories.FirstOrDefault(c => c.Id == parentId);
             }
