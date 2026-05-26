@@ -28,6 +28,7 @@ namespace Snackis.Web
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
             // Repositories
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -36,8 +37,9 @@ namespace Snackis.Web
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IPostService, PostService>();
 
+
             builder.Services.AddDefaultIdentity<AppUser>(options =>
-               options.SignIn.RequireConfirmedAccount = false) // false för att logga in direkt utan bekräfta
+               options.SignIn.RequireConfirmedAccount = false) // false för att loggar in direkt utan bekräfta
                .AddRoles<IdentityRole>() 
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
