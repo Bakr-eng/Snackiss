@@ -6,7 +6,7 @@
 
 <h1 class="mb-4">Snackis</h1>
 
-<!-- PARENT KATEGORIER -->
+<!-- parent kategorier -->
 <div class="mb-4">
     <h5 class="text-muted mb-3">Välj kategori</h5>
     <div class="d-flex flex-wrap gap-2">
@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<!-- UNDERKATEGORIER -->
+<!-- under kategorier -->
 @if (Model.SelectedParent != null)
 {
     <div class="mb-4">
@@ -47,14 +47,14 @@
     </div>
 }
 
-<!-- INLÄGG -->
+<!-- inlägg -->
 @if (Model.SelectedSub != null)
 {
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Inlägg i "@Model.SelectedSub.Name"</h5>
 
         @if (User.Identity?.IsAuthenticated != true)  @* != true betyder att  IsAuthenticated är false eller null *@
-    {
+        {
             <p class="text-danger mt-2">
                 Du behöver <a href="/Identity/Account/Login">logga in</a> eller
                 <a href="/Identity/Account/Register">registrera dig</a> för att kunna skapa inlägg.
@@ -80,6 +80,12 @@
                         <h6 class="mb-1">@post.Title</h6>
                         <small class="text-muted">@post.CreatedAt.ToString("yyyy-MM-dd HH:mm")</small>
                     </div>
+
+                    @if (!string.IsNullOrEmpty(post.ImageUrl))
+                    {
+                        <img src="@post.ImageUrl" alt="Inläggsbild"
+                             class="img-fluid rounded mt-2" style="max-height: 300px;" />
+                    }
                     <p class="mb-0 text-muted small">@post.Content</p>
                 </div>
             }

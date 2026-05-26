@@ -18,6 +18,6 @@ namespace Snackis.Domain.Entities
 
         public string UserId { get; set; }
 
-      //  public string? ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

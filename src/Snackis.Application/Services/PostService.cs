@@ -22,7 +22,7 @@ public class PostService : IPostService
     public async Task<List<Post>> GetByCategoryAsync(int categoryId) =>
         await _postRepository.GetByCategoryAsync(categoryId);
 
-    public async Task CreateAsync(string title, string content, int categoryId, string userId)
+    public async Task CreateAsync(string title, string content, int categoryId, string userId, string? imageUrl = null)
     {
         var post = new Post
         {
@@ -30,7 +30,9 @@ public class PostService : IPostService
             Content = content,
             CategoryId = categoryId,
             UserId = userId,
+            ImageUrl = imageUrl,
             CreatedAt = DateTime.Now
+
         };
         await _postRepository.CreateAsync(post);
     }
