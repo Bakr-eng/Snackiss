@@ -27,7 +27,6 @@ namespace Snackis.Application.Services
                 Content = content,
                 PostId = postId,
                 UserId = userId,
-                CreatedAt = DateTime.Now
             };
             await _comentRepository.CreateAsync(coment);
         }
