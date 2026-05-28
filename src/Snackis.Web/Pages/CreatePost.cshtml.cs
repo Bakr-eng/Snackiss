@@ -45,8 +45,9 @@ namespace Snackis.Web.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+            {
                 return Page();
-
+            }
             string? imageUrl = null;
 
             if (Image != null && Image.Length > 0)
