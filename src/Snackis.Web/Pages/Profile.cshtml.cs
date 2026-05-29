@@ -10,7 +10,7 @@ namespace Snackis.Web.Pages
     public class ProfileModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _env; // för att få tillgång till wwwroot
 
         public ProfileModel(UserManager<AppUser> userManager, IWebHostEnvironment env)
         {

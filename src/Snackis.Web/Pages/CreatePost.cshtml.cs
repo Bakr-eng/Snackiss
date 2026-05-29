@@ -12,7 +12,7 @@ namespace Snackis.Web.Pages
     {
         private readonly IPostService _postService;
         private readonly ICategoryService _categoryService;
-        private readonly IWebHostEnvironment _env; // Detta används för att få tillgång till wwwroot-mappen
+        private readonly IWebHostEnvironment _env; //  för att få tillgång till wwwroot-mappen
 
         public CreatePostModel(IPostService postService, ICategoryService categoryService, IWebHostEnvironment env)
         {
