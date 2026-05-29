@@ -120,7 +120,7 @@
                             @if (coments.Any())
                             {
                                 <div class="mb-3">
-                                    @foreach (var coment in coments.OrderByDescending(c => c.CreatedAt))
+                                    @foreach (var coment in coments)
                                     {
                                         <div class="d-flex gap-2 mb-2">
                                             <div class="bg-white border rounded px-3 py-2 w-100 small">
