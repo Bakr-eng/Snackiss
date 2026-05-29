@@ -26,6 +26,15 @@
 
             <p><strong>Namn:</strong> @Model.CurrentUser.Name</p>
             <p><strong>E-post:</strong> @Model.CurrentUser.Email</p>
+           
+            <div class="mb-3">
+                <form method="post" enctype="multipart/form-data">
+                    <label class="form-label">Välj en bild</label>
+                    <input asp-for="ProfilePicture" type="file" class="form-control" accept="image/*" />
+                    <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                    <button type="submit" class="btn btn-primary mt-2">Spara profilbild</button>
+                </form>
+            </div>
         </div>
     </div>
 }

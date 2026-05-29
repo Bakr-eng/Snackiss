@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Snackis.Infrastructure\Snackis.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\ProfilePictures\" />
+  </ItemGroup>
+
 </Project>

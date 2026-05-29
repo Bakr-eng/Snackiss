@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<!-- under kategorier -->
+<!-- sub kategorier -->
 @if (Model.SelectedParent != null)
 {
     <div class="mb-4">
@@ -35,9 +35,7 @@
             {
                 var isActive = Model.SelectedSub?.Id == sub.Id;
                 <a href="?parentId=@Model.SelectedParent.Id&subId=@sub.Id"
-                   class="btn btn-sm @(isActive ? "btn-success" : "btn-outline-success")">
-                    @sub.Name
-                </a>
+                   class="btn btn-sm @(isActive ? "btn-success" : "btn-outline-success")">@sub.Name</a>
             }
             @if (!Model.SelectedParent.SubCategories.Any())
             {
@@ -151,12 +149,7 @@
                                     <input type="hidden" name="SubId" value="@Model.SubId" />
                                     <input type="hidden" name="NewComentPostId" value="@post.Id" />
                                     <div class="input-group input-group-sm">
-                                        <input type="text"
-                                               name="NewComentContent"
-                                               class="form-control"
-                                               placeholder="Skriv en kommentar..."
-                                               required
-                                               maxlength="500" />
+                                        <input type="text" name="NewComentContent" class="form-control" placeholder="Skriv en kommentar..." required maxlength="500" />
                                         <button type="submit" class="btn btn-primary">Skicka</button>
                                     </div>
                                 </form>
