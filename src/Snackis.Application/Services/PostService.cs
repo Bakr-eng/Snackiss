@@ -59,7 +59,6 @@ public class PostService : IPostService
             await _postRepository.DeleteAsync(post);
         }
     }
-
     public async Task<AppUser?> GetAuthorAsync(string userId) =>
        await _userManager.FindByIdAsync(userId);
 }

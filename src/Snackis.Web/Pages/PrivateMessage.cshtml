@@ -1,4 +1,128 @@
 ﻿@page
 @model Snackis.Web.Pages.PrivateMessageModel
 @{
+    ViewData["Title"] = "Privata Meddelanden";
 }
+
+<div class="container mt-4">
+    <h2 class="mb-4">Privata Meddelanden</h2>
+
+    <!-- Sök efter användare -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Skicka meddelande</h5>
+        </div>
+        <div class="card-body">
+            <form method="get">
+                <div class="input-group mb-3">
+                    <input type="email"
+                           name="searchEmail"
+                           value="@Model.SearchEmail"
+                           class="form-control"
+                           placeholder="Sök efter e-postadress..." />
+                    <button class="btn btn-outline-primary" type="submit">Sök</button>
+                </div>
+            </form>
+
+            @if (Model.SearchEmail != null && Model.ReceiverUser == null)
+            {
+                <div class="alert alert-warning">Ingen användare hittades med e-postadressen "@Model.SearchEmail".</div>
+            }
+
+            @if (Model.ReceiverUser != null)
+            {
+                <div class="alert alert-success d-flex align-items-center gap-2">
+                    @if (!string.IsNullOrEmpty(Model.ReceiverUser.ProfilePictureUrl))
+                    {
+                        <img src="@Model.ReceiverUser.ProfilePictureUrl" alt="Profilbild" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;" />
+                    }
+                    <span>Hittade: <strong>@(Model.ReceiverUser.Name ?? Model.ReceiverUser.Email)</strong></span>
+                </div>
+
+                <form method="post" asp-page-handler="Send">
+                    <input type="hidden" name="receiverId" value="@Model.ReceiverUser.Id" />
+                    <input type="hidden" name="searchEmail" value="@Model.SearchEmail" />
+                    <div class="mb-3">
+                        <textarea name="content"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Skriv ditt meddelande..."
+                              required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Skicka</button>
+                </form>
+            }
+        </div>
+    </div>
+
+    <!-- Konversation (om mottagare är vald) -->
+    @if (Model.ReceiverUser != null && Model.Conversation.Any())
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Konversation med @(Model.ReceiverUser.Name ?? Model.ReceiverUser.Email)
+                </h5>
+            </div>
+            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                @foreach (var msg in Model.Conversation)
+                {
+                    bool isMine = msg.SenderId == Model.CurrentUserId;
+                    <div class="d-flex @(isMine ? "justify-content-end" : "justify-content-start") mb-2">
+                        <div class="p-2 rounded @(isMine ? "bg-primary text-white" : "bg-light border")"
+                             style="max-width: 70%;">
+                            <div>@msg.Content</div>
+                            <div class="@(isMine ? "text-white-50" : "text-muted") mt-1" style="font-size: 0.75rem;">
+                                @msg.SentAt.ToString("dd MMM HH:mm")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Inkorg -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Inkorg</h5>
+        </div>
+        <div class="card-body p-0">
+            @if (!Model.Inbox.Any())
+            {
+                <p class="text-muted p-3 mb-0">Inga meddelanden ännu.</p>
+            }
+            else
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var msg in Model.Inbox)
+                    {
+                        bool isMine = msg.SenderId == Model.CurrentUserId;
+                        string otherEmail = isMine ? Model.GetUserEmail(msg.ReceiverId) : Model.GetUserEmail(msg.SenderId);
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <span class="badge @(isMine ? "bg-secondary" : "bg-primary") me-2">
+                                        @(isMine ? "Skickat" : "Mottaget")
+                                    </span>
+                                    <strong>@otherEmail</strong>
+                                    <p class="mb-0 text-muted mt-1">@msg.Content</p>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-muted d-block">@msg.SentAt.ToString("dd MMM HH:mm")</small>
+                                    <form method="post" asp-page-handler="Delete" class="mt-1">
+                                        <input type="hidden" name="messageId" value="@msg.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Radera detta meddelande?')">
+                                            Radera
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

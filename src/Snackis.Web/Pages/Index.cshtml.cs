@@ -34,7 +34,7 @@ namespace Snackis.Web.Pages
         public Dictionary<int, List<Coment>> ComentsByPost { get; set; } = new(); // komentarer för varje post
 
 
-        [BindProperty(SupportsGet = true)]
+        [BindProperty(SupportsGet = true)] 
         public int? ParentId { get; set; }
 
         [BindProperty(SupportsGet = true)]
