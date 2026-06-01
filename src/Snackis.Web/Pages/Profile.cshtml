@@ -29,10 +29,10 @@
            
             <div class="mb-3">
                 <form method="post" enctype="multipart/form-data">
-                    <label class="form-label">Välj en bild</label>
+                    <label class="form-label">Välj profilbild</label>
                     <input asp-for="ProfilePicture" type="file" class="form-control" accept="image/*" />
                     <span asp-validation-for="ProfilePicture" class="text-danger"></span>
-                    <button type="submit" class="btn btn-primary mt-2">Spara profilbild</button>
+                    <button type="submit" class="btn btn-danger mt-2">Spara profilbild</button>
                 </form>
             </div>
         </div>
