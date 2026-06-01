@@ -26,7 +26,7 @@ namespace Snackis.Web.Pages
         [BindProperty] public string Content { get; set; } = "";
         [BindProperty] public int CategoryId { get; set; }
         [BindProperty] public int ParentId { get; set; }
-        [BindProperty] public IFormFile? Image { get; set; } 
+        [BindProperty] public IFormFile? Image { get; set; } // För att binda den uppladdade filen
 
         public async Task<IActionResult> OnGetAsync(int categoryId, int parentId)
         {
@@ -67,7 +67,7 @@ namespace Snackis.Web.Pages
                 var filePath = Path.Combine(uploadsFolder, fileName); 
 
                 using var stream = new FileStream(filePath, FileMode.Create); 
-                await Image.CopyToAsync(stream);
+                await Image.CopyToAsync(stream); 
 
                 imageUrl = $"/uploads/posts/{fileName}";
             }
@@ -75,7 +75,7 @@ namespace Snackis.Web.Pages
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? ""; // Hämta användarens ID från claims
             await _postService.CreateAsync(Title, Content, CategoryId, userId, imageUrl);
 
-            return RedirectToPage("/Index", new { parentId = ParentId, subId = CategoryId });
+            return RedirectToPage("/Index", new { parentId = ParentId, subId = CategoryId }); 
         }
     }
 }

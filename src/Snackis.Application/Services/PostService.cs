@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Snackis.Domain.Entities;
 using Snackis.Domain.Interface;
 
@@ -7,10 +8,12 @@ namespace Snackis.Application.Services;
 public class PostService : IPostService
 {
     private readonly IPostRepository _postRepository;
+    private readonly UserManager<AppUser> _userManager;
 
-    public PostService(IPostRepository postRepository)
+    public PostService(IPostRepository postRepository, UserManager<AppUser> userManager)
     {
         _postRepository = postRepository;
+        _userManager = userManager;
     }
 
     public async Task<List<Post>> GetAllAsync() =>
@@ -56,4 +59,7 @@ public class PostService : IPostService
             await _postRepository.DeleteAsync(post);
         }
     }
+
+    public async Task<AppUser?> GetAuthorAsync(string userId) =>
+       await _userManager.FindByIdAsync(userId);
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Snackis.Application.Services;
@@ -12,21 +13,25 @@ namespace Snackis.Web.Pages
         private readonly ICategoryService _categoryService;
         private readonly IPostService _postService;
         private readonly IComentService _comentService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public IndexModel(ICategoryService categoryService, IPostService postService, IComentService comentService)
+        public IndexModel(ICategoryService categoryService, IPostService postService,
+            IComentService comentService, UserManager<AppUser> userManager)
         {
             _categoryService = categoryService;
             _postService = postService;
             _comentService = comentService;
+            _userManager = userManager;
         }
 
+        public Dictionary<string, AppUser> UsersByPost { get; set; } = new(); // För att visa användarnamn på inlägg
         public List<Category> ParentCategories { get; set; } = new();
         public Category? SelectedParent { get; set; }
         public Category? SelectedSub { get; set; }
         public List<Post> Posts { get; set; } = new();
 
-        // komentarer för varje post
-        public Dictionary<int, List<Coment>> ComentsByPost { get; set; } = new();
+        
+        public Dictionary<int, List<Coment>> ComentsByPost { get; set; } = new(); // komentarer för varje post
 
 
         [BindProperty(SupportsGet = true)]
@@ -88,6 +93,17 @@ namespace Snackis.Web.Pages
                     foreach (var post in Posts)
                     {
                         ComentsByPost[post.Id] = await _comentService.GetByPostAsync(post.Id);
+
+
+                        // Ladda användarinformation för varje inlägg
+                        if (!UsersByPost.ContainsKey(post.UserId))
+                        {
+                            var user = await _userManager.FindByIdAsync(post.UserId);
+                            if (user != null)
+                            {
+                                UsersByPost[post.UserId] = user;
+                            }
+                        }
                     }
                 }
 

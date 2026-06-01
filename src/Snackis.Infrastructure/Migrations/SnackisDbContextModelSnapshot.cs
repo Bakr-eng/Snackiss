@@ -41,7 +41,7 @@ namespace Snackis.Infrastructure.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Snackis.Domain.Entities.Coment", b =>
@@ -70,7 +70,7 @@ namespace Snackis.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Coments");
+                    b.ToTable("Coments", (string)null);
                 });
 
             modelBuilder.Entity("Snackis.Domain.Entities.Post", b =>
@@ -106,7 +106,7 @@ namespace Snackis.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Snackis.Domain.Entities.PrivateMessage", b =>
@@ -134,7 +134,7 @@ namespace Snackis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrivateMessages");
+                    b.ToTable("PrivateMessages", (string)null);
                 });
 
             modelBuilder.Entity("Snackis.Domain.Entities.Report", b =>
@@ -166,7 +166,7 @@ namespace Snackis.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
                 });
 
             modelBuilder.Entity("Snackis.Domain.Entities.Category", b =>

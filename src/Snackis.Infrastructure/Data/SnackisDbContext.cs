@@ -25,6 +25,8 @@ namespace Snackis.Infrastructure.Data
                 .WithMany(c => c.SubCategories)
                 .HasForeignKey(c => c.ParentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
         }
 
 
@@ -35,5 +37,8 @@ namespace Snackis.Infrastructure.Data
         public DbSet<Report> Reports { get; set; }
 
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
+
+
+
     }
 }

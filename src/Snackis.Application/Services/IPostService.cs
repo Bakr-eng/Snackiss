@@ -15,5 +15,6 @@ namespace Snackis.Application.Services
         Task CreateAsync(string title, string content, int categoryId, string userId, string? imageUrl = null);
         Task UpdateAsync(int id, string title, string content);
         Task DeleteAsync(int id);
+        Task<AppUser?> GetAuthorAsync(string userId);
     }
 }
