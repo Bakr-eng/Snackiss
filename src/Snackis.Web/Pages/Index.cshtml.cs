@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Client;
 using Snackis.Application.Services;
 using Snackis.Domain.Entities;
 using System;
@@ -25,7 +27,9 @@ namespace Snackis.Web.Pages
         }
 
         public Dictionary<string, AppUser> UsersByPost { get; set; } = new(); // För att visa användarnamn på inlägg
+        public Dictionary<string, AppUser> UsersByComent { get; set; } = new (); // För att visa användarnamn på kommentarer
         public Dictionary<int, List<Coment>> ComentsByPost { get; set; } = new(); // komentarer för varje post
+        
         public List<Category> ParentCategories { get; set; } = new();
         public Category? SelectedParent { get; set; }
         public Category? SelectedSub { get; set; }
@@ -89,14 +93,14 @@ namespace Snackis.Web.Pages
                 {
                     Posts = await _postService.GetByCategoryAsync(SubId.Value);
 
-                    // Ladda kommentarer för alla inlägg i kategorin
-                    foreach (var post in Posts)
+                    
+                    foreach (var post in Posts) // Ladda kommentarer för varje inlägg
                     {
                         ComentsByPost[post.Id] = await _comentService.GetByPostAsync(post.Id);
 
 
-                        // Ladda användarinformation för varje inlägg
-                        if (!UsersByPost.ContainsKey(post.UserId))
+                        
+                        if (!UsersByPost.ContainsKey(post.UserId)) // Ladda användarinformation för varje inlägg
                         {
                             var user = await _userManager.FindByIdAsync(post.UserId);
                             if (user != null)
@@ -104,7 +108,22 @@ namespace Snackis.Web.Pages
                                 UsersByPost[post.UserId] = user;
                             }
                         }
+
+                        foreach (var coment in ComentsByPost[post.Id]) // Ladda användarinformation för varje kommentar
+                        {
+                            if (!UsersByComent.ContainsKey(coment.UserId))
+                            {
+                                var user = await _userManager.FindByIdAsync(coment.UserId);
+                                if (user != null)
+                                {
+                                    UsersByComent[coment.UserId] = user;
+                                }
+                            }
+                        }
+
                     }
+
+                  
                 }
 
             }
