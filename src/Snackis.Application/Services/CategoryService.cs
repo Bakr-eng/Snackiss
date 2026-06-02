@@ -1,5 +1,4 @@
-﻿
-using Snackis.Domain.Entities;
+﻿using Snackis.Domain.Entities;
 using Snackis.Domain.Interface;
 
 namespace Snackis.Application.Services;

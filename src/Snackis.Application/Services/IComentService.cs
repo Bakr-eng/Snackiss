@@ -1,11 +1,10 @@
 ﻿using Snackis.Domain.Entities;
 
-namespace Snackis.Application.Services
+namespace Snackis.Application.Services;
+
+public interface IComentService
 {
-    public interface IComentService
-    {
-        Task<List<Coment>> GetByPostAsync(int postId);
-        Task CreateAsync(string Content, int postId, string userId);
-        Task DeleteAsync(int id);
-    }
+    Task<List<Coment>> GetByPostAsync(int postId);
+    Task CreateAsync(string Content, int postId, string userId);
+    Task DeleteAsync(int id);
 }

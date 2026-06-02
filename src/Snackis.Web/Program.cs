@@ -34,12 +34,14 @@ namespace Snackis.Web
             builder.Services.AddScoped<IPostRepository, PostRepository>();
             builder.Services.AddScoped<IComentRepository, ComentRepository>();
             builder.Services.AddScoped<IPrivateMessageRepository, PrivateMessageRepository>();
+            builder.Services.AddScoped<IReportRepository, ReportRepository>();
 
             // Services
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddScoped<IComentService, ComentService>();
             builder.Services.AddScoped<IPrivateMessageService, PrivateMessageService>();
+            builder.Services.AddScoped<IReportService, ReportService>();
 
 
             builder.Services.AddDefaultIdentity<AppUser>(options =>

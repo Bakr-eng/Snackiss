@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snackis.Application.Services
+namespace Snackis.Application.Services;
+
+public interface ICategoryService
 {
-    public interface ICategoryService
-    {
-        Task<List<Category>> GetAllAsync();
-        Task CreateAsync(string name, int? parentId);
-        Task UpdateAsync(int id, string name);
-        Task DeleteAsync(int id);
-    }
+    Task<List<Category>> GetAllAsync();
+    Task CreateAsync(string name, int? parentId);
+    Task UpdateAsync(int id, string name);
+    Task DeleteAsync(int id);
 }

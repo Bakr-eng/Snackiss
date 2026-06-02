@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Snackis.Domain.Entities;
 using Snackis.Domain.Interface;
 
