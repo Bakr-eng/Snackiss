@@ -7,7 +7,7 @@ using Snackis.Domain.Entities;
 
 namespace Snackis.Web.Pages
 {
-    [Authorize]
+    [Authorize(Policy = "ShouldBeUser")]
     public class PrivateMessageModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
@@ -19,10 +19,9 @@ namespace Snackis.Web.Pages
             _privateMessageService = privateMessageService;
         }
 
-        // Inloggad användares ID
-        public string CurrentUserId { get; set; } = string.Empty;
+        public string CurrentUserId { get; set; } = string.Empty; // Inloggad användares ID
 
-        
+
         [BindProperty(SupportsGet = true)]
         public string? SearchEmail { get; set; } 
 
@@ -36,7 +35,7 @@ namespace Snackis.Web.Pages
         public List<PrivateMessage> Inbox { get; set; } = new(); 
 
         
-        private Dictionary<string, string> _userEmailCache = new(); // Cache för att slå upp e-post från userId i inkorg'
+        private Dictionary<string, string> _userEmailCache = new(); // Cache för att slå upp e-post från userId i inkorg
         
 
         public async Task OnGetAsync()
@@ -53,7 +52,7 @@ namespace Snackis.Web.Pages
             {
                 ReceiverUser = await _userManager.FindByEmailAsync(SearchEmail);
 
-                if (ReceiverUser != null && ReceiverUser.Id != CurrentUserId)
+                if (ReceiverUser != null && ReceiverUser.Id != CurrentUserId) 
                 {
                     Conversation = await _privateMessageService.GetConversationAsync(CurrentUserId, ReceiverUser.Id);
                 }
@@ -66,25 +65,26 @@ namespace Snackis.Web.Pages
         }
         public async Task<IActionResult> OnPostSendAsync(string receiverId, string content, string? searchEmail)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
+            var currentUser = await _userManager.GetUserAsync(User); 
             if (currentUser == null)
             {
                 return RedirectToPage();
             }
 
-            if (!string.IsNullOrWhiteSpace(content) && !string.IsNullOrWhiteSpace(receiverId))
+            if (!string.IsNullOrWhiteSpace(content) && !string.IsNullOrWhiteSpace(receiverId)) 
             {
                 await _privateMessageService.SendAsync(currentUser.Id, receiverId, content.Trim());
             }
-
-            // Behåll sökningen så att konversationen visas efter skickat meddelande
             return RedirectToPage(new { searchEmail });
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int messageId)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser == null) return RedirectToPage();
+            if (currentUser == null)
+            {
+                return RedirectToPage();
+            }
 
             await _privateMessageService.DeleteAsync(messageId, currentUser.Id);
 
