@@ -25,13 +25,13 @@ namespace Snackis.Web.Pages
         }
 
         public Dictionary<string, AppUser> UsersByPost { get; set; } = new(); // För att visa användarnamn på inlägg
+        public Dictionary<int, List<Coment>> ComentsByPost { get; set; } = new(); // komentarer för varje post
         public List<Category> ParentCategories { get; set; } = new();
         public Category? SelectedParent { get; set; }
         public Category? SelectedSub { get; set; }
         public List<Post> Posts { get; set; } = new();
 
         
-        public Dictionary<int, List<Coment>> ComentsByPost { get; set; } = new(); // komentarer för varje post
 
 
         [BindProperty(SupportsGet = true)] 

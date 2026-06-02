@@ -35,8 +35,8 @@ namespace Snackis.Web.Pages
         public List<PrivateMessage> Inbox { get; set; } = new(); 
 
         
-        private Dictionary<string, string> _userEmailCache = new(); // Cache för att slå upp e-post från userId i inkorg
-        
+        private Dictionary<string, string> _userEmailCache = new(); // sparar 1string för userId, 2string för email
+
 
         public async Task OnGetAsync()
         {
@@ -109,7 +109,7 @@ namespace Snackis.Web.Pages
                 if (!_userEmailCache.ContainsKey(id))
                 {
                     var user = await _userManager.FindByIdAsync(id);
-                    _userEmailCache[id] = user?.Name ?? user?.Email ?? id;
+                    _userEmailCache[id] = user?.Name ?? user?.Email ?? id; // om name är null,använd email, om Email är null, anväd id
                 }
             }
         }
