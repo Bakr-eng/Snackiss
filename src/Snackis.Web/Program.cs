@@ -18,9 +18,6 @@ namespace Snackis.Web
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            // Identity DbContext 
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
 
             // forum‑databas
             builder.Services.AddDbContext<SnackisDbContext>(options =>
@@ -47,7 +44,7 @@ namespace Snackis.Web
             builder.Services.AddDefaultIdentity<AppUser>(options =>
                options.SignIn.RequireConfirmedAccount = false) // false för att loggar in direkt utan bekräfta
                .AddRoles<IdentityRole>() 
-               .AddEntityFrameworkStores<ApplicationDbContext>();
+               .AddEntityFrameworkStores<SnackisDbContext>();
 
             builder.Services.AddAuthorization(options =>
             {

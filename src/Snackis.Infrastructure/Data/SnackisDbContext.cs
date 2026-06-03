@@ -1,14 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Snackis.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Snackis.Infrastructure.Data
 {
-    public class SnackisDbContext : DbContext
+    public class SnackisDbContext : IdentityDbContext<AppUser>
     {
         public SnackisDbContext(DbContextOptions<SnackisDbContext> options)
            : base(options)
@@ -25,17 +22,11 @@ namespace Snackis.Infrastructure.Data
                 .WithMany(c => c.SubCategories)
                 .HasForeignKey(c => c.ParentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-
         }
 
-
         public DbSet<Post> Posts { get; set; }
-
         public DbSet<Coment> Coments { get; set; }
-
         public DbSet<Report> Reports { get; set; }
-
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
 
 

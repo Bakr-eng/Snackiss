@@ -1,4 +1,11 @@
 
+using Microsoft.EntityFrameworkCore;
+using Snackis.Application.Services;
+using Snackis.Domain.Entities;
+using Snackis.Domain.Interface;
+using Snackis.Infrastructure.Data;
+using Snackis.Infrastructure.Repositories;
+
 namespace Snackis.API
 {
     public class Program
@@ -8,6 +15,17 @@ namespace Snackis.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+
+            builder.Services.AddDbContext<SnackisDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddIdentityCore<AppUser>()
+               .AddEntityFrameworkStores<SnackisDbContext>();
+
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
+            builder.Services.AddScoped<IPostService, PostService>();
+
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -26,12 +44,8 @@ namespace Snackis.API
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }
