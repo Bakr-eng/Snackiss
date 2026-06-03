@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snackis.Application", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snackis.Domain", "src\Snackis.Domain\Snackis.Domain.csproj", "{5EF36C4B-3F59-41EF-ACA2-434674BE1D85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snackis.API", "src\Snackis.API\Snackis.API.csproj", "{B65E016C-5B09-4527-AA00-232283334D18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5EF36C4B-3F59-41EF-ACA2-434674BE1D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EF36C4B-3F59-41EF-ACA2-434674BE1D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EF36C4B-3F59-41EF-ACA2-434674BE1D85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B65E016C-5B09-4527-AA00-232283334D18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B65E016C-5B09-4527-AA00-232283334D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B65E016C-5B09-4527-AA00-232283334D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B65E016C-5B09-4527-AA00-232283334D18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

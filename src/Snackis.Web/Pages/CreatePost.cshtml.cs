@@ -62,14 +62,14 @@ namespace Snackis.Web.Pages
                 }
 
                 var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "posts");
-                Directory.CreateDirectory(uploadsFolder); // Skapar mappen om den inte finns
-                var fileName = $"{Guid.NewGuid()}{ext}"; // Guid.NewGuid() sparar en unik filnamn
-                var filePath = Path.Combine(uploadsFolder, fileName); 
+                Directory.CreateDirectory(uploadsFolder); 
+                var fileName = $"{Guid.NewGuid()}{ext}"; // sparar en unik filnamn
+                var filePath = Path.Combine(uploadsFolder, fileName);
 
                 using var stream = new FileStream(filePath, FileMode.Create); 
-                await Image.CopyToAsync(stream); 
+                await Image.CopyToAsync(stream);
 
-                imageUrl = $"/uploads/posts/{fileName}";
+                imageUrl = $"/uploads/posts/{fileName}"; 
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? ""; // Hämta användarens ID från claims
