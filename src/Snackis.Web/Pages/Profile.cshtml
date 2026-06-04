@@ -23,6 +23,12 @@
                     <span class="text-white fs-2">@(Model.CurrentUser.Name?.FirstOrDefault() ?? '?')</span>
                 </div>
             }
+            <form method="post" asp-page-handler="DeletePicture">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    Ta bort bild
+                </button>
+            </form>
+
 
             <p><strong>Namn:</strong> @Model.CurrentUser.Name</p>
             <p><strong>E-post:</strong> @Model.CurrentUser.Email</p>

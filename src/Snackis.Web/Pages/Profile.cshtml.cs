@@ -61,5 +61,31 @@ namespace Snackis.Web.Pages
 
             return RedirectToPage();
         }
+
+        public async Task<IActionResult> OnPostDeletePictureAsync()
+        {
+            CurrentUser = await _userManager.GetUserAsync(User);
+
+            if (CurrentUser == null)
+                return RedirectToPage();
+
+            // Ta bort filen från wwwroot om den finns
+            if (!string.IsNullOrEmpty(CurrentUser.ProfilePictureUrl))
+            {
+                var filePath = Path.Combine(_env.WebRootPath, CurrentUser.ProfilePictureUrl.TrimStart('/'));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+
+           
+            CurrentUser.ProfilePictureUrl = null;
+            await _userManager.UpdateAsync(CurrentUser);
+
+            return RedirectToPage();
+        }
+
     }
 }
