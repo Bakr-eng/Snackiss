@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Client;
 using Snackis.Application.Services;
 using Snackis.Domain.Entities;
-using System;
 using System.Security.Claims;
 
 namespace Snackis.Web.Pages
