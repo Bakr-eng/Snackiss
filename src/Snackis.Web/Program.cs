@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Snackis.Application.HttpServices;
 using Snackis.Application.Services;
 using Snackis.Domain.Entities;
 using Snackis.Domain.Interface;
 using Snackis.Infrastructure.Data;
 using Snackis.Infrastructure.Repositories;
 using Snackis.Web.Data;
+using Snackis.Web.HttpServices;
 
 namespace Snackis.Web
 {
@@ -22,6 +24,13 @@ namespace Snackis.Web
             // forum‑databas
             builder.Services.AddDbContext<SnackisDbContext>(options =>
                 options.UseSqlServer(connectionString));
+            
+
+            builder.Services.AddHttpClient<IPostServiceApi, PostServiceApi>(client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]
+                    ?? throw new InvalidOperationException("ApiSettings:BaseUrl saknas i appsettings.json"));
+            });
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

@@ -1,0 +1,37 @@
+﻿@page
+@model Snackis.Web.Pages.Admin.PostsPageModel
+@{
+    ViewData["Title"] = "Alla inlägg (via API)";
+}
+
+<h2>Alla inlägg</h2>
+
+@if (!Model.Posts.Any())
+{
+    <p class="text-muted">Inga inlägg hittades.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Kategori</th>
+                <th>Författare</th>
+                <th>Skapad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in Model.Posts)
+            {
+                <tr>
+                    <td>@post.Title</td>
+                    <td>@post.CategoryName</td>
+                    <td>@post.AuthorName</td>
+                    <td>@post.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
