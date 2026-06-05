@@ -13,14 +13,16 @@ namespace Snackis.Web.Pages
         private readonly IPostService _postService;
         private readonly IComentService _comentService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IReportService _reportService;
 
         public IndexModel(ICategoryService categoryService, IPostService postService,
-            IComentService comentService, UserManager<AppUser> userManager)
+            IComentService comentService, UserManager<AppUser> userManager, IReportService reportService)
         {
             _categoryService = categoryService;
             _postService = postService;
             _comentService = comentService;
             _userManager = userManager;
+            _reportService = reportService;
         }
 
         public Dictionary<string, AppUser> UsersByPost { get; set; } = new(); // För att visa användarnamn på inlägg
@@ -32,7 +34,8 @@ namespace Snackis.Web.Pages
         public Category? SelectedSub { get; set; }
         public List<Post> Posts { get; set; } = new();
 
-        
+
+       
 
 
         [BindProperty(SupportsGet = true)] 
@@ -50,6 +53,13 @@ namespace Snackis.Web.Pages
 
         [BindProperty]
         public int NewComentPostId { get; set; }
+
+        
+        [BindProperty]
+        public int ReportPostId { get; set; }
+
+        [BindProperty]
+        public string ReportReason { get; set; } = ""; //  rapportera inlägg
 
         public async Task OnGetAsync(int? parentId, int? subId)
         {
@@ -72,6 +82,28 @@ namespace Snackis.Web.Pages
                 openPostId = NewComentPostId
             });
         }
+
+        public async Task<IActionResult> OnPostReportAsync()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId != null && ReportPostId > 0 && !string.IsNullOrWhiteSpace(ReportReason))
+            {
+                await _reportService.CreateAsync(
+                    ReportPostId,
+                    userId,
+                    ReportReason);
+            }
+
+            return RedirectToPage(new
+            {
+                parentId = ParentId,
+                subId = SubId,
+                openPostId = OpenPostId
+            });
+        }
+
+
         private async Task LoadPageDataAsync()
         {
             ParentCategories = await _categoryService.GetAllAsync();
@@ -125,5 +157,6 @@ namespace Snackis.Web.Pages
 
             }
         }
+
     }
 }

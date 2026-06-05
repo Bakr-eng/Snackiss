@@ -12,7 +12,7 @@ public class ReportService : IReportService
     }
 
     public async Task<List<Report>> GetAllAsync() =>
-   await _reportRepository.GetAllAsync();
+        await _reportRepository.GetAllAsync();
 
     public async Task<Report?> GetByIdAsync(int id) =>
         await _reportRepository.GetOneAsync(id);
@@ -36,7 +36,9 @@ public class ReportService : IReportService
         var report = await _reportRepository.GetOneAsync(id);
 
         if (report is null)
+        {
             return;
+        }
 
         report.IsHandled = true;
 

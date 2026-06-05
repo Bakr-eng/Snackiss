@@ -1,0 +1,66 @@
+﻿@page
+@model Snackis.Web.Pages.Admin.ReportedPageModel
+@{
+    ViewData["Title"] = "Rapporterade inlägg";
+}
+
+<h2 class="mb-4">Rapporterade inlägg</h2>
+
+@if (!Model.Reports.Any())
+{
+    <p class="text-muted fst-italic">Inga rapporter just nu.</p>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Inlägg</th>
+                <th>Anledning</th>
+                <th>Rapporter (ID)</th>
+                <th>Datum</th>
+                <th>Status</th>
+                <th>Åtgärder</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model.Reports)
+            {
+                <tr class="@(report.IsHandled ? "table-success" : "")">
+                    <td>@report.Id</td>
+                    <td>
+                        <strong>@(report.Post?.Title ?? "Okänt inlägg")</strong>
+                    </td>
+                    <td>@report.Reason</td>
+                    <td><small class="text-muted">@report.ReporterId</small></td>
+                    <td>@report.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        @if (report.IsHandled)
+                        {
+                            <span class="badge bg-success">Hanterad</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Ohanterad</span>
+                        }
+                    </td>
+                    <td class="d-flex gap-2">
+                        @if (!report.IsHandled)
+                        {
+                            <form method="post" asp-page-handler="MarkHandled">
+                                <input type="hidden" name="id" value="@report.Id" />
+                                <button type="submit" class="btn btn-sm btn-success">&#10003; Markera hanterad</button>
+                            </form>
+                        }
+                        <form method="post" asp-page-handler="Delete"
+                              onsubmit="return confirm('Ta bort rapport #@report.Id?');">
+                            <input type="hidden" name="id" value="@report.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger"> Ta bort</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

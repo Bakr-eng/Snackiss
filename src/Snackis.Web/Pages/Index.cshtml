@@ -137,6 +137,42 @@
                         </a>
                     }
 
+                    <!-- Report-knapp -->
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger ms-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#reportModal-@post.Id">
+                            &#9872; Rapportera
+                        </button>
+
+                        <div class="modal fade" id="reportModal-@post.Id" tabindex="-1">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">Rapportera inlägg</h6>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <form method="post" asp-page-handler="Report">
+                                        <div class="modal-body">
+                                            <input type="hidden" name="ReportPostId" value="@post.Id" />
+                                            <input type="hidden" name="ParentId" value="@Model.ParentId" />
+                                            <input type="hidden" name="SubId" value="@Model.SubId" />
+                                            <label class="form-label small">Anledning</label>
+                                            <input type="text" name="ReportReason" class="form-control form-control-sm"
+                                                   placeholder="Beskriv problemet..." required maxlength="300" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Avbryt</button>
+                                            <button type="submit" class="btn btn-sm btn-danger">Skicka rapport</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                     <!-- Kommentarssektion (visas när isOpen) -->
                     @if (isOpen)
                     {
