@@ -24,7 +24,7 @@ namespace Snackis.Web
             // forum‑databas
             builder.Services.AddDbContext<SnackisDbContext>(options =>
                 options.UseSqlServer(connectionString));
-            
+
 
             builder.Services.AddHttpClient<IPostServiceApi, PostServiceApi>(client =>
             {
@@ -33,6 +33,11 @@ namespace Snackis.Web
             });
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+
+            
+
+
 
 
             // Repositories
@@ -49,7 +54,7 @@ namespace Snackis.Web
             builder.Services.AddScoped<IPrivateMessageService, PrivateMessageService>();
             builder.Services.AddScoped<IReportService, ReportService>();
 
-
+            // Identity
             builder.Services.AddDefaultIdentity<AppUser>(options =>
                options.SignIn.RequireConfirmedAccount = false) // false för att loggar in direkt utan bekräfta
                .AddRoles<IdentityRole>() 
@@ -62,6 +67,7 @@ namespace Snackis.Web
             });
 
             builder.Services.AddRazorPages();
+            builder.Services.AddControllers();
 
             var app = builder.Build();
 
@@ -80,8 +86,9 @@ namespace Snackis.Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.MapRazorPages();
 
+            app.MapRazorPages();
+            app.MapControllers();
             // Seed
             using (var scope = app.Services.CreateScope())
             {

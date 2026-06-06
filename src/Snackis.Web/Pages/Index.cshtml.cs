@@ -59,7 +59,7 @@ namespace Snackis.Web.Pages
         public int ReportPostId { get; set; }
 
         [BindProperty]
-        public string ReportReason { get; set; } = ""; //  rapportera inlägg
+        public string ReportReason { get; set; } = ""; 
 
         public async Task OnGetAsync(int? parentId, int? subId)
         {

@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Snackis.API\Snackis.API.csproj" />
     <ProjectReference Include="..\Snackis.Infrastructure\Snackis.Infrastructure.csproj" />
   </ItemGroup>
 
