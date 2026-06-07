@@ -17,8 +17,8 @@ namespace Snackis.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("MyConnectionStringAzure")
+                ?? throw new InvalidOperationException("Connection string 'MyConnectionStringAzure' not found.");
 
 
             // forum‑databas
