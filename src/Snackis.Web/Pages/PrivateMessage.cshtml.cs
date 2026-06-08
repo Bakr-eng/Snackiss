@@ -86,7 +86,14 @@ namespace Snackis.Web.Pages
                 return RedirectToPage();
             }
 
-            await _privateMessageService.DeleteAsync(messageId, currentUser.Id);
+            try
+            {
+                await _privateMessageService.DeleteAsync(messageId, currentUser.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting message: {ex.Message}");
+            }
 
             return RedirectToPage(new { searchEmail = SearchEmail });
         }

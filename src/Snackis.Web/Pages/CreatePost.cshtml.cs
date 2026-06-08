@@ -48,34 +48,44 @@ namespace Snackis.Web.Pages
             {
                 return Page();
             } 
-            string? imageUrl = null; 
+            string? imageUrl = null;
 
-            if (Image != null && Image.Length > 0)
+            try
             {
-                var allowed = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-                var ext = Path.GetExtension(Image.FileName).ToLowerInvariant();
-
-                if (!allowed.Contains(ext)) // Contains är en metod som kollar om ext finns i allowed arrayen
+                if (Image != null && Image.Length > 0)
                 {
-                    ModelState.AddModelError("Image", "Endast jpg, png, gif och webp är tillåtna.");
-                    return Page();
+                    var allowed = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                    var ext = Path.GetExtension(Image.FileName).ToLowerInvariant();
+
+                    if (!allowed.Contains(ext)) // Contains är en metod som kollar om ext finns i allowed arrayen
+                    {
+                        ModelState.AddModelError("Image", "Endast jpg, png, gif och webp är tillåtna.");
+                        return Page();
+                    }
+
+                    var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "posts");
+                    Directory.CreateDirectory(uploadsFolder);
+                    var fileName = $"{Guid.NewGuid()}{ext}"; // sparar en unik filnamn
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await Image.CopyToAsync(stream);
+
+                    imageUrl = $"/uploads/posts/{fileName}";
                 }
 
-                var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "posts");
-                Directory.CreateDirectory(uploadsFolder); 
-                var fileName = $"{Guid.NewGuid()}{ext}"; // sparar en unik filnamn
-                var filePath = Path.Combine(uploadsFolder, fileName);
 
-                using var stream = new FileStream(filePath, FileMode.Create); 
-                await Image.CopyToAsync(stream);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? ""; // Hämta användarens ID från claims
+                await _postService.CreateAsync(Title, Content, CategoryId, userId, imageUrl);
 
-                imageUrl = $"/uploads/posts/{fileName}"; 
+                return RedirectToPage("/Index", new { parentId = ParentId, subId = CategoryId });
+
             }
-
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? ""; // Hämta användarens ID från claims
-            await _postService.CreateAsync(Title, Content, CategoryId, userId, imageUrl);
-
-            return RedirectToPage("/Index", new { parentId = ParentId, subId = CategoryId }); 
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Image", $"Fel vid uppladdning av bild: {ex.Message}");
+                return Page();
+            }
         }
     }
 }

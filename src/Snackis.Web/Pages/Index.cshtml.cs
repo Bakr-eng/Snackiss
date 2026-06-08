@@ -106,7 +106,16 @@ namespace Snackis.Web.Pages
 
         private async Task LoadPageDataAsync()
         {
-            ParentCategories = await _categoryService.GetAllAsync();
+            try
+            {
+                ParentCategories = await _categoryService.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Fel vid hämtning av kategorier: " + ex.Message);
+                return;
+            }
+
 
             if (ParentId.HasValue)
             {
@@ -120,38 +129,66 @@ namespace Snackis.Web.Pages
 
                 if (SelectedSub != null)
                 {
-                    Posts = await _postService.GetByCategoryAsync(SubId.Value);
+                    try
+                    {
+                        Posts = await _postService.GetByCategoryAsync(SubId.Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Fel vid hämtning av inlägg: " + ex.Message);
+                        return;
+                    }
 
-                    
                     foreach (var post in Posts) // Ladda kommentarer för varje inlägg
                     {
-                        ComentsByPost[post.Id] = await _comentService.GetByPostAsync(post.Id);
-
-
-                        
-                        if (!UsersByPost.ContainsKey(post.UserId)) // Ladda användarinformation för varje inlägg
+                        try
                         {
-                            var user = await _userManager.FindByIdAsync(post.UserId);
-                            if (user != null)
-                            {
-                                UsersByPost[post.UserId] = user;
-                            }
+                            ComentsByPost[post.Id] = await _comentService.GetByPostAsync(post.Id);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Fel vid hämtning av kommentarer för inlägg {post.Id}: " + ex.Message);
+                            ComentsByPost[post.Id] = new List<Coment>(); // Sätt en tom lista vid fel
                         }
 
-                        foreach (var coment in ComentsByPost[post.Id]) // Ladda användarinformation för varje kommentar
+
+                        try
                         {
-                            if (!UsersByComent.ContainsKey(coment.UserId))
+                            if (!UsersByPost.ContainsKey(post.UserId)) // Ladda användarinformation för varje inlägg
                             {
-                                var user = await _userManager.FindByIdAsync(coment.UserId);
+                                var user = await _userManager.FindByIdAsync(post.UserId);
                                 if (user != null)
                                 {
-                                    UsersByComent[coment.UserId] = user;
+                                    UsersByPost[post.UserId] = user;
                                 }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Fel vid hämtning av användare för inlägg {post.Id}: " + ex.Message);
+                        }
+
+                        try
+                        {
+                            foreach (var coment in ComentsByPost[post.Id]) // Ladda användarinformation för varje kommentar
+                            {
+                                if (!UsersByComent.ContainsKey(coment.UserId))
+                                {
+                                    var user = await _userManager.FindByIdAsync(coment.UserId);
+                                    if (user != null)
+                                    {
+                                        UsersByComent[coment.UserId] = user;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Fel vid hämtning av användare för kommentarer i inlägg {post.Id}: " + ex.Message);
+
+                        }
 
                     }
-
                   
                 }
 
