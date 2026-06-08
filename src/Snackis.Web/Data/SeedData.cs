@@ -36,7 +36,14 @@ namespace Snackis.Web.Data
                     EmailConfirmed = true,
                     Name = "Admin"
                 };
-                await userManager.CreateAsync(adminUser, adminPassword);
+                var result = await userManager.CreateAsync(adminUser, adminPassword);
+
+                if (!result.Succeeded)
+                {
+                    throw new Exception(
+                        string.Join(", ", result.Errors.Select(e => e.Description)));
+                }
+
                 await userManager.AddToRoleAsync(adminUser, "Admin");
             }
         }
