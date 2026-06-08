@@ -99,21 +99,27 @@
                     {
                         bool isMine = msg.SenderId == Model.CurrentUserId;
                         string otherEmail = isMine ? Model.GetUserEmail(msg.ReceiverId) : Model.GetUserEmail(msg.SenderId);
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <span class="badge @(isMine ? "bg-secondary" : "bg-primary") me-2">
-                                        @(isMine ? "Skickat" : "Mottaget")
-                                    </span>
-                                    <strong>@otherEmail</strong>
-                                    <p class="mb-0 text-muted mt-1">@msg.Content</p>
+                        <li class="list-group-item inbox-item @(isMine ? "sent" : "")">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3 overflow-hidden">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <span class="badge @(isMine ? "bg-secondary" : "bg-primary")">
+                                            @(isMine ? "Skickat" : "Mottaget")
+                                        </span>
+                                        @if(!isMine)
+                                        {
+                                            <span class="inbox-sender">@otherEmail</span>
+                                        }
+
+                                    </div>
+                                    <p class="inbox-preview mb-0">@msg.Content</p>
                                 </div>
-                                <div class="text-end">
-                                    <small class="text-muted d-block">@msg.SentAt.ToString("dd MMM HH:mm")</small>
-                                    <form method="post" asp-page-handler="Delete" class="mt-1">
+                                <div class="text-end flex-shrink-0">
+                                    <span class="inbox-time d-block mb-2">@msg.SentAt.ToString("dd MMM HH:mm")</span>
+                                    <form method="post" asp-page-handler="Delete">
                                         <input type="hidden" name="messageId" value="@msg.Id" />
                                         <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Radera detta meddelande?')">
+                                                onclick="return confirm('Radera?\')">
                                             Radera
                                         </button>
                                     </form>
