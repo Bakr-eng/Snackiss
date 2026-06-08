@@ -117,13 +117,13 @@ namespace Snackis.Web.Pages
             }
 
 
-            if (ParentId.HasValue)
+            if (ParentId.HasValue) 
             {
                 SelectedParent = ParentCategories.FirstOrDefault(c => c.Id == ParentId);
             }
 
 
-            if (SubId.HasValue)
+            if (SubId.HasValue) 
             {
                 SelectedSub = SelectedParent?.SubCategories.FirstOrDefault(s => s.Id == SubId);
 

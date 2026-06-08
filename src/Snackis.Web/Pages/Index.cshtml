@@ -4,7 +4,7 @@
     ViewData["Title"] = "Snackis";
 }
 
-<h1 class="mb-4">Snackis</h1>
+<h1 class="mb-4">Snackis </h1>
 
 <!-- parent kategorier -->
 <div class="mb-4">
@@ -140,8 +140,8 @@
                     <!-- Report-knapp -->
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <button type="button"
-                                class="btn btn-sm btn-outline-danger ms-1"
+                            <button type="button"
+                            class="btn btn-sm btn-outline-danger ms-1"
                                 data-bs-toggle="modal"
                                 data-bs-target="#reportModal-@post.Id">
                             &#9872; Rapportera
