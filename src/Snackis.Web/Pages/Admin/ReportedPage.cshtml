@@ -17,6 +17,7 @@ else
             <tr>
                 <th>#</th>
                 <th>Inlägg</th>
+                <th>Inläggs-ID</th>
                 <th>Anledning</th>
                 <th>Rapporter (ID)</th>
                 <th>Datum</th>
@@ -29,9 +30,9 @@ else
             {
                 <tr class="@(report.IsHandled ? "table-success" : "")">
                     <td>@report.Id</td>
-                    <td>
-                        <strong>@(report.Post?.Title ?? "Okänt inlägg")</strong>
-                    </td>
+                    <td><strong>@(report.Post?.Title ?? "Okänt inlägg")</strong> </td>
+                    <td>@report.PostId</td>
+
                     <td>@report.Reason</td>
                     <td><small class="text-muted">@report.ReporterId</small></td>
                     <td>@report.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
