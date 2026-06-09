@@ -9,6 +9,6 @@ namespace Snackis.Domain.Entities
         public string Content { get; set; }
         public string SenderId { get; set; }
         public string ReceiverId { get; set; }
-        public DateTime SentAt { get; set; } = DateTime.Now;
+        public DateTime SentAt { get; set; } = DateTime.UtcNow;
     }
 }

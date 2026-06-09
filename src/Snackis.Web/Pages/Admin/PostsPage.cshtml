@@ -28,7 +28,7 @@ else
                     <td>@post.Title</td>
                     <td>@post.CategoryName</td>
                     <td>@post.AuthorName</td>
-                    <td>@post.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@post.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
                 </tr>
             }
         </tbody>

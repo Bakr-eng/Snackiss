@@ -33,7 +33,7 @@ public class PostService : IPostService
             CategoryId = categoryId,
             UserId = userId,
             ImageUrl = imageUrl,
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow
 
         };
         await _postRepository.CreateAsync(post);

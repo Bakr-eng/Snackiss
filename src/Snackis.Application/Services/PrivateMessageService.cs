@@ -26,7 +26,7 @@ public class PrivateMessageService : IPrivateMessageService
             SenderId = senderId,
             ReceiverId = receiverId,
             Content = content,
-            SentAt = DateTime.Now
+            SentAt = DateTime.UtcNow,
         };
         await _privateMessageRepository.CreateAsync(message);
     }
