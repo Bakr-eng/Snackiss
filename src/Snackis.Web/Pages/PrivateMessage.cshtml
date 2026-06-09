@@ -106,10 +106,7 @@
                                         <span class="badge @(isMine ? "bg-secondary" : "bg-primary")">
                                             @(isMine ? "Skickat" : "Mottaget")
                                         </span>
-                                        @if(!isMine)
-                                        {
                                             <span class="inbox-sender">@otherEmail</span>
-                                        }
 
                                     </div>
                                     <p class="inbox-preview mb-0">@msg.Content</p> 

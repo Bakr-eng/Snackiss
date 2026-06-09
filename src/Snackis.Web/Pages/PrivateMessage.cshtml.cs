@@ -73,7 +73,7 @@ namespace Snackis.Web.Pages
 
             if (!string.IsNullOrWhiteSpace(content) && !string.IsNullOrWhiteSpace(receiverId)) 
             {
-                await _privateMessageService.SendAsync(currentUser.Id, receiverId, content.Trim());
+                await _privateMessageService.SendAsync(currentUser.Id, receiverId, content.Trim()); 
             }
             return RedirectToPage(new { searchEmail });
         }
@@ -104,7 +104,7 @@ namespace Snackis.Web.Pages
             return _userEmailCache.TryGetValue(userId, out var email) ? email : userId;
         }
 
-        private async Task BuildUserEmailCacheAsync(List<PrivateMessage> messages)
+        private async Task BuildUserEmailCacheAsync(List<PrivateMessage> messages) 
         {
             var userIds = messages
                 .SelectMany(m => new[] { m.SenderId, m.ReceiverId })
