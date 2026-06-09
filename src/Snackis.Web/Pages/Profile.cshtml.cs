@@ -25,6 +25,7 @@ namespace Snackis.Web.Pages
             CurrentUser = await _userManager.GetUserAsync(User);
         }
 
+
         public async Task<IActionResult> OnPostAsync()
         {
             CurrentUser = await _userManager.GetUserAsync(User);
@@ -72,7 +73,7 @@ namespace Snackis.Web.Pages
             {
                 var filePath = Path.Combine(_env.WebRootPath, CurrentUser.ProfilePictureUrl.TrimStart('/'));
 
-                if (System.IO.File.Exists(filePath))
+                if (System.IO.File.Exists(filePath)) 
                 {
                     System.IO.File.Delete(filePath);
                 }

@@ -130,7 +130,7 @@ namespace Snackis.Web.Pages
                 {
                     try
                     {
-                        Posts = await _postService.GetByCategoryAsync(SubId.Value);
+                        Posts = await _postService.GetByCategoryAsync(SubId.Value); 
                     }
                     catch (Exception ex)
                     {

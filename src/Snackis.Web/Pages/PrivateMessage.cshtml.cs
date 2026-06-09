@@ -50,11 +50,11 @@ namespace Snackis.Web.Pages
 
             if (!string.IsNullOrWhiteSpace(SearchEmail))
             {
-                ReceiverUser = await _userManager.FindByEmailAsync(SearchEmail);
+                ReceiverUser = await _userManager.FindByEmailAsync(SearchEmail); 
 
                 if (ReceiverUser != null && ReceiverUser.Id != CurrentUserId) 
                 {
-                    Conversation = await _privateMessageService.GetConversationAsync(CurrentUserId, ReceiverUser.Id);
+                    Conversation = await _privateMessageService.GetConversationAsync(CurrentUserId, ReceiverUser.Id); 
                 }
                 else if (ReceiverUser?.Id == CurrentUserId)
                 {
