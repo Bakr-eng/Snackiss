@@ -24,7 +24,7 @@ public class ReportService : IReportService
             PostId = postId,
             ReporterId = reporterId,
             Reason = reason,
-            CreatedAt = DateTime.Now,
+            CreatedAt = DateTime.Now.ToLocalTime(),
             IsHandled = false
         };
 

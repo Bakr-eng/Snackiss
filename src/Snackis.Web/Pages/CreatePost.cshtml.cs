@@ -35,7 +35,9 @@ namespace Snackis.Web.Pages
             SubCategory = parent?.SubCategories.FirstOrDefault(s => s.Id == categoryId);
 
             if (SubCategory == null)
+            {
                 return RedirectToPage("/Index");
+            }
 
             CategoryId = categoryId;
             ParentId = parentId;
@@ -57,7 +59,7 @@ namespace Snackis.Web.Pages
                     var allowed = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
                     var ext = Path.GetExtension(Image.FileName).ToLowerInvariant();
 
-                    if (!allowed.Contains(ext)) // Contains är en metod som kollar om ext finns i allowed arrayen
+                    if (!allowed.Contains(ext)) 
                     {
                         ModelState.AddModelError("Image", "Endast jpg, png, gif och webp är tillåtna.");
                         return Page();
@@ -65,7 +67,7 @@ namespace Snackis.Web.Pages
 
                     var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "posts");
                     Directory.CreateDirectory(uploadsFolder);
-                    var fileName = $"{Guid.NewGuid()}{ext}"; // sparar en unik filnamn
+                    var fileName = $"{Guid.NewGuid()}{ext}"; 
                     var filePath = Path.Combine(uploadsFolder, fileName);
 
                     using var stream = new FileStream(filePath, FileMode.Create);

@@ -44,7 +44,6 @@ namespace Snackis.Web.Pages
         [BindProperty(SupportsGet = true)]
         public int? SubId { get; set; }
 
-        // Vilket inläggs kommentarsektion är öppen
         [BindProperty(SupportsGet = true)]
         public int? OpenPostId { get; set; }
 

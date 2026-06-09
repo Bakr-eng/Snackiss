@@ -17,7 +17,6 @@ namespace Snackis.Web.Pages
             _userManager = userManager;
             _env = env;
         }
-
         [BindProperty] public IFormFile? ProfilePicture { get; set; }
         public AppUser? CurrentUser { get; set; }
 
@@ -25,7 +24,6 @@ namespace Snackis.Web.Pages
         {
             CurrentUser = await _userManager.GetUserAsync(User);
         }
-
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -47,11 +45,11 @@ namespace Snackis.Web.Pages
                 }
 
                 var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "ProfilePictures");
-                Directory.CreateDirectory(uploadsFolder); // Skapar mappen om den inte finns
-                var fileName = $"{Guid.NewGuid()}{ext}"; // Guid.NewGuid() sparar en unik filnamn
-                var filePath = Path.Combine(uploadsFolder, fileName);
+                Directory.CreateDirectory(uploadsFolder);
+                var fileName = $"{Guid.NewGuid()}{ext}"; 
+                var filePath = Path.Combine(uploadsFolder, fileName); 
 
-                using (var stream = new FileStream(filePath, FileMode.Create)) 
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await ProfilePicture.CopyToAsync(stream); 
                 }
