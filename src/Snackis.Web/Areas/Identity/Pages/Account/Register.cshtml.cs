@@ -125,7 +125,7 @@ namespace Snackis.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "User"); // Vid registrering blir Rollen User 
+                    await _userManager.AddToRoleAsync(user, "User");
 
                     _logger.LogInformation("User created a new account with password.");
 
