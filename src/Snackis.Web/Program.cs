@@ -90,9 +90,9 @@ namespace Snackis.Web
             app.MapRazorPages();
             app.MapControllers();
             // Seed
-            using (var scope = app.Services.CreateScope())
+            using (var scope = app.Services.CreateScope())  
             {
-                await SeedData.Initialize(scope.ServiceProvider);
+                await SeedData.Initialize(scope.ServiceProvider); 
             }
             
             app.Run();

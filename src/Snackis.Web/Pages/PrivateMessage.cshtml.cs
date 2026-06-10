@@ -65,7 +65,7 @@ namespace Snackis.Web.Pages
         }
         public async Task<IActionResult> OnPostSendAsync(string receiverId, string content, string? searchEmail)
         {
-            var currentUser = await _userManager.GetUserAsync(User); 
+            var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null)
             {
                 return RedirectToPage();
@@ -116,7 +116,7 @@ namespace Snackis.Web.Pages
                 if (!_userEmailCache.ContainsKey(id))
                 {
                     var user = await _userManager.FindByIdAsync(id);
-                    _userEmailCache[id] = user?.Name ?? user?.Email ?? id; // om name är null,använd email, om Email är null, anväd id
+                    _userEmailCache[id] = user?.Name ?? user?.Email ?? id; 
                 }
             }
         }
